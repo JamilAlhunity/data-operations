@@ -1,0 +1,44 @@
+<div class="container m-3 text-center">
+  <h1 class="text-muted">Role Level</h1>
+
+  <div *ngFor="let role of roles; let i = index">
+    <section class="dropdown" class="my-3">
+      <h3>{{ !i ? "Role" : "Sub Role" }}</h3>
+      <button
+        class="btn btn-info text-light dropdown-toggle"
+        type="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+        (click)="clear()"
+      >
+        {{ !i ? role[i].roleDescEn : curUsrName[i - 1] }}
+      </button>
+
+      <ul class="dropdown-menu">
+        <input
+          type="text"
+          placeholder="Search in Lvl{{ i }}"
+          [(ngModel)]="inputValue"
+          (keyup)="searchFilter(inputValue, i)"
+        />
+        <div *ngIf="!inputValue; else elseBlock">
+          <li *ngFor="let rol of roles[i]">
+            <a class="dropdown-item" (click)="alfarid(rol, i)">{{
+              rol["roleDescEn"]
+            }}</a>
+          </li>
+        </div>
+        <ng-template #elseBlock>
+          <li *ngFor="let data of filterData">
+            <a
+              class="dropdown-item"
+              (click)="alfarid(data, i)"
+              (click)="clear()"
+              >{{ data.roleDescEn }}</a
+            >
+          </li>
+        </ng-template>
+      </ul>
+    </section>
+  </div>
+</div>
